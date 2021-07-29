@@ -5,7 +5,7 @@
   tags: lan
   tasks:
   - name: "Configure Hostname and Domain Name"
-    ios_system:
+    cisco.ios.ios_system:
       hostname: "{{ inventory_hostname }}"
       domain_name: "{{ domain_name }}"
       lookup_enabled: no
@@ -15,7 +15,7 @@
       server: "{{ ntp_server }}"
       logging: true
       state: present
-      key_id: 10
+      key_id: "10"
       auth_key: 15435A030726242723273C21181319000A
       auth: true
 
