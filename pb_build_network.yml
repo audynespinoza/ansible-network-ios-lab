@@ -1,0 +1,20 @@
+---
+- name: "Play1: Configure All LAN Switches"
+  hosts: lan
+  gather_facts: no
+  tags: lan
+  tasks:
+  - name: "Configure Hostname and Domain Name"
+    ios_system:
+      hostname: "{{ inventory_hostname }}"
+      domain_name: "{{ domain_name }}"
+      lookup_enabled: no
+      name_servers: "{{ dns_servers }}"
+  - name: "Configure NTP"
+    ios_ntp:
+      server: {{ ntp_server }}
+      logging: true
+      state: present
+
+
+
