@@ -12,7 +12,7 @@
       name_servers: "{{ dns_servers }}"
   - name: "Configure NTP"
     ios_ntp:
-      server: {{ ntp_server }}
+      server: "{{ ntp_server }}""
       logging: true
       state: present
 
