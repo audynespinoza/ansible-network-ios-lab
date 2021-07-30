@@ -35,11 +35,12 @@
     loop: "{{ ntp_servers_in_cfg }}"
 
   - name: "Configure Interfaces"
-    cisco.ios.ios_interface:
+    cisco.ios.ios_interfaces:
       name: "{{ item.name }}"
+      description: "{{ item.description }}"
       duplex: "{{ intf_duplex }}"
       mtu: "{{ intf_mtu }}"
-      state: up
+      enabled: yes
     loop: "{{ l2_interfaces[inventory_hostname] }}"
     register: ios_intf
     tags: interfaces
