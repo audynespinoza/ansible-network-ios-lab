@@ -42,5 +42,6 @@
       state: up
       loop: "{{ l2_interfaces[inventory_hostname] }}"
       register: ios_intf
+      tags: interfaces
 
 
