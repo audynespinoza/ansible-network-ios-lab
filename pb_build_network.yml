@@ -10,6 +10,8 @@
       domain_name: "{{ domain_name }}"
       lookup_enabled: no
       name_servers: "{{ dns_servers }}"
+    tags: basic
+    notify: "save ios"
 
   - name: Configure NTP
     cisco.ios.ios_ntp:
@@ -19,6 +21,8 @@
       key_id: "10"
       auth_key: 15435A030726242723273C21181319000A
       auth: true
+    tags: ntp
+    notify: "save ios"
 
   - name: Get Running Config
     cisco.ios.ios_command:
@@ -35,6 +39,8 @@
       - "no ntp server {{ item }}"
     when: item != ntp_server
     loop: "{{ ntp_servers_in_cfg }}"
+    tags: ntp
+    notify: "save ios"
 
   - name: Configure Interfaces
     cisco.ios.ios_interfaces:
@@ -47,11 +53,12 @@
     loop: "{{ l2_interfaces[inventory_hostname] }}"
     register: ios_intf
     tags: interfaces
+    notify: "save ios"
 
   - name: Display Interfaces
     debug: 
       msg: "Device {{ inventory_hostname }} Port: {{ item.name }} with description: {{ item.description }}"
-    when: item.description is defined and item.description == 'access01'
+    when: item.description is defined and item.description == 'access1'
     loop: "{{ ios_intf.results[0].after }}"
     tags: interfaces
 
@@ -65,10 +72,18 @@
     loop: "{{ vlans }}"
     register: vlans
     tags: vlans
+    notify: "save ios"
   
   - name: Display L2 VLANs
     debug: var=vlans
 
+  handlers:
+  - name: save ios
+    cisco.ios.ios_command:
+      commands:
+      - write mem
+      timeout: 40
+    when: not ansible_check_mode
   
 
 
