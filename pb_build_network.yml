@@ -49,8 +49,8 @@
     tags: interfaces
 
   - name: Display Interfaces
-    debug: item
-    when: "'description' in item"
+    debug: 
+      msg: "description is: {{ item }}"
     loop: "{{ ios_intf.results[0].after }}"
     tags: interfaces
 
