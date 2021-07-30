@@ -52,6 +52,6 @@
       - name: "{{ item.name }}"
         vlan_id: "{{ item.vlan_id }}"
         state: active
-    state: merged
+      state: merged
     loop: "{{ vlans }}"
     register: vlans
