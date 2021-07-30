@@ -28,22 +28,22 @@
     set_fact: ntp_servers_in_cfg="{{ running_config.stdout[0] | regex_findall('^ntp server (\S+)', multiline=True) }}"
 
   - name: Remove Old NTP Servers
-    ios_config:
+    cisco.ios.ios_config:
       lines:
       - "no ntp server {{ item }}"
     when: item != ntp_server
     loop: "{{ ntp_servers_in_cfg }}"
 
   - name: "Configure Interfaces"
-    cisco.ios.ios_interfaces:
+    cisco.ios.ios_interface:
       config:
-        name: "{{ item.name }}"
+      - name: "{{ item.name }}"
         description: "{{ item.description }}"
         duplex: "{{ intf_duplex }}"
         mtu: "{{ intf_mtu }}"
         enabled: yes
       state: merged
-      loop: "{{ l2_interfaces[inventory_hostname] }}"
+    loop: "{{ l2_interfaces[inventory_hostname] }}"
     register: ios_intf
     tags: interfaces
 
