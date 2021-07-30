@@ -1,7 +1,7 @@
 ---
 - name: "Play1: Configure All LAN Switches"
   hosts: lan
-  gather_facts: no
+  gather_facts: yes
   tags: lan
   tasks:
   - name: "Configure Hostname and Domain Name"
