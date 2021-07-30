@@ -43,7 +43,7 @@
         mtu: "{{ intf_mtu }}"
         enabled: yes
       state: merged
-    loop: "{{ l2_interfaces[inventory_hostname] }}"
+      loop: "{{ l2_interfaces[inventory_hostname] }}"
     register: ios_intf
     tags: interfaces
 
