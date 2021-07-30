@@ -50,7 +50,7 @@
 
   - name: Display Interfaces
     debug: 
-      msg: "description is: {{ item }}"
+      msg: "Device {{ inventory_hostname }} Port: {{ item.name }} with description: {{ item.description }}"
     when: item.description is defined and item.description == 'access01'
     loop: "{{ ios_intf.results[0].after }}"
     tags: interfaces
