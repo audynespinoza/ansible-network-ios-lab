@@ -42,7 +42,7 @@
         duplex: "{{ intf_duplex }}"
         mtu: "{{ intf_mtu }}"
         enabled: yes
-        loop: "{{ l2_interfaces[inventory_hostname] }}"
+      loop: "{{ l2_interfaces[inventory_hostname] }}"
       state: merged
     register: ios_intf
     tags: interfaces
