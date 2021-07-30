@@ -46,7 +46,6 @@
       state: merged
     loop: "{{ l2_interfaces[inventory_hostname] }}"
     register: ios_intf
-    debug: 
     tags: interfaces
 
   - name: Configure L2 VLANs in DB
