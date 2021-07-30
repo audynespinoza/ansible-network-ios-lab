@@ -7,14 +7,12 @@
   tasks:
     - name: show run
       cisco.ios.ios_command:
-        provider:
-          authorize: yes
         commands:
         - show run
 
       register: print_output
 
-    - debug: var=print_output.stdout_lines
+    - debug: var=print_output
 
     - name: save output to a file
       copy: content="{{ print_output.stdout }}" dest="./output/{{ inventory_hostname }}.txt"
