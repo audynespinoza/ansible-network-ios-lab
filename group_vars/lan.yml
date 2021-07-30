@@ -2,37 +2,37 @@
 l2_interfaces:
   cs1:
   - name: GigabitEthernet0/1
-    description: access01
+    description: access1
     mode: trunk
   - name: GigabitEthernet0/2
-    description: access02
+    description: access2
     mode: trunk
   - name: GigabitEthernet0/3
-    description: core02
+    description: cs2
     mode: trunk
   cs2:
   - name: GigabitEthernet0/1
-    description: access01
+    description: access1
     mode: trunk
   - name: GigabitEthernet0/2
-    description: access02
+    description: access2
     mode: trunk
   - name: GigabitEthernet0/3
-    description: core01
+    description: cs1
     mode: trunk
   access1:
   - name: GigabitEthernet0/1
-    description: core01
+    description: cs1
     mode: trunk
   - name: GigabitEthernet0/2
-    description: core02
+    description: cs2
     mode: trunk
   access2:
   - name: GigabitEthernet0/1
-    description: core01
+    description: cs1
     mode: trunk
   - name: GigabitEthernet0/2
-    description: core02
+    description: cs2
     mode: trunk
 
 vlans:
