@@ -31,7 +31,6 @@
     ios_config:
       lines:
       - "no ntp server {{ item }}"
-    when: item != ntp_server
     loop: "{{ ntp_servers_in_cfg }}"
 
 
