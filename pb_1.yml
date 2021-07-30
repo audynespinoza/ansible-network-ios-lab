@@ -9,7 +9,7 @@
       cisco.ios.ios_command:
         authorize: yes
         commands:
-          - show run
+        - show run
 
       register: print_output
 
