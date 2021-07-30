@@ -18,19 +18,21 @@
       key_id: "10"
       auth_key: 15435A030726242723273C21181319000A
       auth: true
-  - name: Get Current List Of NTP Servers
+  - name: Get Running Config
     cisco.ios.ios_command:
       commands:
       - sh run
     register: running_config
+  
+  - name: Get Current List of NTP Servers
     set_fact: ntp_servers_in_cfg="{{ running_config.stdout[0] | regex_findall('^ntp server (\S+)', multiline=True) }}"
 
   - name: Remove Old NTP Servers
     ios_config:
       lines:
       - no ntp server {{ item }}
-      when: item != {{ ntp_server }}
-      loop: "{{ ntp_servers_in_cfg }}"
+    when: item != {{ ntp_server }}
+    loop: "{{ ntp_servers_in_cfg }}"
 
 
 
