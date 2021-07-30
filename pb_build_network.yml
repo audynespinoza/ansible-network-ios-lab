@@ -10,6 +10,7 @@
       domain_name: "{{ domain_name }}"
       lookup_enabled: no
       name_servers: "{{ dns_servers }}"
+
   - name: Configure NTP
     cisco.ios.ios_ntp:
       server: "{{ ntp_server }}"
@@ -18,6 +19,7 @@
       key_id: "10"
       auth_key: 15435A030726242723273C21181319000A
       auth: true
+
   - name: Get Running Config
     cisco.ios.ios_command:
       commands:
@@ -54,4 +56,4 @@
         state: active
       state: merged
     loop: "{{ vlans }}"
-    register: vlans
+    tags: vlans
