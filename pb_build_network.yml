@@ -35,7 +35,7 @@
     loop: "{{ ntp_servers_in_cfg }}"
 
   - name: "Configure Interfaces"
-    cisco.ios.ios_interface:
+    cisco.ios.ios_interfaces:
       config:
         name: "{{ item.name }}"
         description: "{{ item.description }}"
