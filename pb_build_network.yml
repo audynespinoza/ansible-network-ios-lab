@@ -37,13 +37,13 @@
   - name: "Configure Interfaces"
     cisco.ios.ios_interface:
       config:
-      - name: "{{ item.name }}"
+        name: "{{ item.name }}"
         description: "{{ item.description }}"
         duplex: "{{ intf_duplex }}"
         mtu: "{{ intf_mtu }}"
         enabled: yes
+        loop: "{{ l2_interfaces[inventory_hostname] }}"
       state: merged
-    loop: "{{ l2_interfaces[inventory_hostname] }}"
     register: ios_intf
     tags: interfaces
 
