@@ -34,13 +34,13 @@
     when: item != ntp_server
     loop: "{{ ntp_servers_in_cfg }}"
 
-- name: "Play2: Configure Interfaces"
-  cisco.ios.ios_interface:
-    name: "{{ item.name }}"
-    duplex: "{{ intf_duplex }}"
-    mtu: "{{ intf_mtu }}"
-    state: up
-    loop: "{{ l2_interfaces[inventory_hostname] }}"
-    register: ios_intf
+  - name: "Configure Interfaces"
+    cisco.ios.ios_interface:
+      name: "{{ item.name }}"
+      duplex: "{{ intf_duplex }}"
+      mtu: "{{ intf_mtu }}"
+      state: up
+      loop: "{{ l2_interfaces[inventory_hostname] }}"
+      register: ios_intf
 
 
