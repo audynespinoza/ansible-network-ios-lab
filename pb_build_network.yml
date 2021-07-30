@@ -51,7 +51,7 @@
   - name: Display Interfaces
     debug: 
       msg: "description is: {{ item }}"
-    when: item.description == 'access01'
+    when: item.description is defined and item.description == 'access01'
     loop: "{{ ios_intf.results[0].after }}"
     tags: interfaces
 
