@@ -34,3 +34,12 @@ l2_interfaces:
     - name: GigabitEthernet0/2
       description: core02
       mode: trunk
+
+vlans:
+  - name: DMZ
+    vlan_id: 10
+  - name: APP
+    vlan_id: 20
+  - name: DATA
+    vlan_id: 30
+

@@ -1,5 +1,5 @@
 ---
-- name: "Play1: Configure All LAN Switches"
+- name: "Play1: Configure LAN Switches"
   hosts: lan
   gather_facts: yes
   tags: lan
@@ -46,4 +46,11 @@
     register: ios_intf
     tags: interfaces
 
+  - name: Configure VLANs in DB
+    cisco.ios.ios_vlans:
+      vlan_id: 
+      name: 
+      state: active
+    state: merged
+    loop: {{ vlans }}
 
