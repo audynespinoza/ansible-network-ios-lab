@@ -49,7 +49,9 @@
     tags: interfaces
 
   - name: Display Interfaces
-    debug: var=ios_intf.stdout
+    debug: item
+    when: "'description' in item"
+    loop: "{{ ios_intf.results[0].after }}"
     tags: interfaces
 
   - name: Configure L2 VLANs in DB
