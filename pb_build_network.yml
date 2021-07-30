@@ -48,6 +48,10 @@
     register: ios_intf
     tags: interfaces
 
+  - name: Display Interfaces
+    debug: var=ios_intf
+    tags: interfaces
+
   - name: Configure L2 VLANs in DB
     cisco.ios.ios_vlans:
       config:
@@ -62,6 +66,5 @@
   - name: Display L2 VLANs
     debug: var=vlans
   
-  - name: Display Interfaces
-    debug: var=ios_intf
+
 
