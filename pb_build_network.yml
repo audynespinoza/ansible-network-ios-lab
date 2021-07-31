@@ -86,6 +86,14 @@
         state: present
     loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list  }}"
 
+  - name: Enable Dot1q on Trunks
+    cisco.ios.ios_config:
+      lines:
+      - switchport trunk encapsulation dot1q
+      parents: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') }}"
+      tags: trunk
+      notify: "save ios"
+
   - name: Configure Access Ports
     cisco.ios.ios_interfaces:
       config:
