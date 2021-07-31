@@ -116,6 +116,7 @@
 - name: Configure Core Switches
   hosts: core
   gather_facts: no
+  tags: core
   tasks:
   - name: Configure CS to CS VLAN
     cisco.ios.ios_vlans:
