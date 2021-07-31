@@ -134,7 +134,7 @@
       config:
       - name: "{{ item.name }}"
         mode: "{{ item.mode }}"
-        trunk_allowed_vlans: "{{ (vlans + core_vlans) | map(attibute='vlan_id') | join(',') }}"
+        trunk_allowed_vlans: "{{ (core_vlans | map(attibute='vlan_id') | join(',') }}"
         state: present
     loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list  }}"
     tags: trunk
