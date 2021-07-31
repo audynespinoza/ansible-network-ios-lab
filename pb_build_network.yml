@@ -1,7 +1,7 @@
 ---
 - name: Play1 - Configure LAN Switches
   hosts: lan
-  gather_facts: yes
+  gather_facts: no
   tags: lan
   tasks:
   - name: Configure Hostname and Domain Name
@@ -70,12 +70,12 @@
         state: active
       state: merged
     loop: "{{ vlans }}"
-    register: vlans
+    register: vlan_info
     tags: vlan
     notify: "save ios"
   
   - name: Display L2 VLANs
-    debug: var=vlans
+    debug: var=vlan_info
 
   - name: Configure L2 Trunks
     cisco.ios.ios_l2_interfaces:
