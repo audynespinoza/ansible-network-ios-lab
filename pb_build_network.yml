@@ -126,13 +126,13 @@
   - name: Configure CS to CS Trunk
     cisco.ios.ios_l2_interfaces:
       config:
-      - name: "{{ item.name }}"
+      - name: "{{ item.interface }}"
         trunk:
           allowed_vlans: "{{ (vlans + core_vlans) | map(attribute='vlan_id') | join(',') }}"
           native_vlan: 1
           encapsulation: dot1q
       state: replaced
-    loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list  }}"
+    loop: "{{ core_vlans  }}"
 
   handlers:
   - name: save ios
