@@ -122,7 +122,7 @@
         vlan_id: "{{ item.vlan_id }}"
         state: active
       state: merged
-    loop: "{{ l2_interfaces[inventory_hostname] }}"
+    loop: "{{ core_vlans }}"
     tags: vlan
     notify: "save ios"
 
