@@ -135,6 +135,8 @@
           encapsulation: dot1q
       state: replaced
     loop: "{{ core_vlans  }}"
+    tags: core
+    notify: "save ios"
 
   handlers:
   - name: save ios
