@@ -54,4 +54,6 @@ vlans:
   vlan_id: 20
 - name: DATA
   vlan_id: 30
+- name: VOICE
+  vlan_id: 99
 
