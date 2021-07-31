@@ -87,7 +87,7 @@
           encapsulation: dot1q
       state: merged
     loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list }}"
-    tags: what
+    tags: trunk
     notify: "save ios"
 
   - name: Configure Access Ports
