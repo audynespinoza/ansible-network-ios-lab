@@ -85,7 +85,7 @@
           allowed_vlans: "{{ vlans | map(attribute='vlan_id') | join(',') }}"
           native_vlan: 1
           encapsulation: dot1q
-      state: replace
+      state: replaced
     loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list  }}"
 
   - name: Configure Access Ports
