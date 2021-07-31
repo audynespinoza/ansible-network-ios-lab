@@ -102,6 +102,8 @@
         access_vlan: "{{ item.vlan }}"
         state: present
     loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'access') | list }}"
+    tags: access
+    notify: "save ios"
   
   handlers:
   - name: save ios
@@ -135,7 +137,7 @@
         state: present
     loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list  }}"
     tags: trunk
-    notify:: "save ios"
+    notify: "save ios"
 
   handlers:
   - name: save ios
