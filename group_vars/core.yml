@@ -1,0 +1,4 @@
+---
+core_vlans:
+- name: CS_PEER
+  vlan_id: 200

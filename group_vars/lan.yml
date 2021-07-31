@@ -27,6 +27,10 @@ l2_interfaces:
   - name: GigabitEthernet0/2
     description: cs2
     mode: trunk
+  - name: GigabitEthernet2/0
+    description: dmz
+    mode: access
+    vlan: 10
   access2:
   - name: GigabitEthernet0/1
     description: cs1
@@ -34,6 +38,14 @@ l2_interfaces:
   - name: GigabitEthernet0/2
     description: cs2
     mode: trunk
+  - name: GigabitEthernet2/0
+    description: app
+    mode: access
+    vlan: 20
+  - name: GigabitEthernet2/1
+    description: data
+    mode: access
+    vlan: 30
 
 vlans:
 - name: DMZ

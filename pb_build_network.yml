@@ -52,7 +52,7 @@
       state: merged
     loop: "{{ l2_interfaces[inventory_hostname] }}"
     register: ios_intf
-    tags: interfaces
+    tags: interface
     notify: "save ios"
 
   - name: Display Interfaces
@@ -60,7 +60,7 @@
       msg: "Device {{ inventory_hostname }} Port: {{ item.name }} with description: {{ item.description }}"
     when: item.description is defined and item.description == 'access1'
     loop: "{{ ios_intf.results[0].after }}"
-    tags: interfaces
+    tags: interface
 
   - name: Configure L2 VLANs in DB
     cisco.ios.ios_vlans:
@@ -71,11 +71,63 @@
       state: merged
     loop: "{{ vlans }}"
     register: vlans
-    tags: vlans
+    tags: vlan
     notify: "save ios"
   
   - name: Display L2 VLANs
     debug: var=vlans
+
+  - name: Configure L2 Trunks
+    cisco.ios.ios_l2_interfaces:
+      config:
+      - name: "{{ item.name }}"
+        mode: "{{ item.mode }}"
+        trunk_allowed_vlans: "{{ vlans | map(attibute=vlan_id) | join(',') }}"
+        state: present
+    loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list  }}"
+
+  - name: Configure Access Ports
+    cisco.ios.ios_interfaces:
+      config:
+      - name: "{{ item.name }}"
+        mode: "{{ item.mode }}"
+        access_vlan: "{{ item.vlan }}"
+        state: present
+    loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'access') | list }}"
+  
+  handlers:
+  - name: save ios
+    ios_command:
+      commands:
+      - write mem
+      timeout: 40
+    when: not ansible_check_mode
+
+- name: Configure Core Switches
+  hosts: core
+  gather_facts: no
+  tasks:
+  - name: Configure CS to CS VLAN
+    cisco.ios.ios_vlans:
+      config:
+      - name: "{{ item.name }}"
+        vlan_id: "{{ item.vlan_id }}"
+        state: active
+      state: merged
+    loop: "{{ l2_interfaces[inventory_hostname] }}"
+    tags: vlan
+    notify: "save ios"
+
+  - name: Configure CS to CS Trunk
+    cisco.ios.ios_l2_interfaces:
+      config:
+      - name: "{{ item.name }}"
+        mode: "{{ item.mode }}"
+        trunk_allowed_vlans: "{{ vlans + core_vlans | map(attibute=vlan_id) | join(',') }}"
+        state: present
+    loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'trunk') | list  }}"
+    tags: trunk
+    notify:: "save ios"
 
   handlers:
   - name: save ios
