@@ -96,7 +96,7 @@
       - name: "{{ item.name }}"
         access:
           vlan: "{{ item.vlan }}"
-      state: replace
+      state: replaced
     loop: "{{ l2_interfaces[inventory_hostname] | selectattr('mode', 'equalto', 'access') | list }}"
     tags: access
     notify: "save ios"
